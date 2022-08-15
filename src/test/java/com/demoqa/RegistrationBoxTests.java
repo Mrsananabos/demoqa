@@ -6,21 +6,19 @@ import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class RegistrationBoxTests {
 
     @BeforeAll
     static void configure() {
         Configuration.baseUrl = "https://demoqa.com";
-        Configuration.holdBrowserOpen = true;
-        Configuration.browserSize = "1024x768";
     }
 
     @Test
     void fillRegistrationFormPositiveTest() {
         open("/automation-practice-form");
+
         $("#userForm #firstName").setValue("Petr");
         $("#userForm #lastName").setValue("Smirnov");
         $("#userForm #userEmail").setValue("Smirnov@mail.ru");
@@ -34,15 +32,15 @@ public class RegistrationBoxTests {
         $(byText("Music")).click();
         $("#uploadPicture").uploadFromClasspath("avatar.jpg");
         $("#currentAddress").setValue("Milan");
-
         $(byText("Select State")).scrollTo().click();
         $(byText("Haryana")).click();
         $(byText("Select City")).click();
         $(byText("Karnal")).click();
 
-        $("#submit").scrollTo().click();
+        executeJavaScript("$('footer').remove()");
+        executeJavaScript("$('#close-fixedban').remove()");
 
-        System.out.println("dd");
+        $("#submit").scrollTo().click();
 
         $(".modal-content").shouldHave(text("Petr"),
                 text("Smirnov"),
