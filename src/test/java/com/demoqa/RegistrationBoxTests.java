@@ -40,7 +40,7 @@ public class RegistrationBoxTests {
         executeJavaScript("$('footer').remove()");
         executeJavaScript("$('#close-fixedban').remove()");
 
-        $("#submit").scrollTo().click();
+        $("#submit").click();
 
         $(".modal-content").shouldHave(text("Petr"),
                 text("Smirnov"),
