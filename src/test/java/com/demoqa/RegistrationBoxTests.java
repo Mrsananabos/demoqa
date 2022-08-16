@@ -4,6 +4,7 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -18,36 +19,37 @@ public class RegistrationBoxTests {
     @Test
     void fillRegistrationFormPositiveTest() {
         open("/automation-practice-form");
+        executeJavaScript("$('footer').remove()");
+        executeJavaScript("$('#close-fixedban').remove()");
 
-        $("#userForm #firstName").setValue("Petr");
-        $("#userForm #lastName").setValue("Smirnov");
-        $("#userForm #userEmail").setValue("Smirnov@mail.ru");
-        $(byText("Male")).click();
+        $("#firstName").setValue("Petr");
+        $("#lastName").setValue("Smirnov");
+        $("#userEmail").setValue("Smirnov@mail.ru");
+        $("#genterWrapper").$(byText("Male")).click();
         $("#userForm #userNumber").setValue("1112223330");
         $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").selectOptionByValue("0");
-        $(".react-datepicker__year-select").selectOptionByValue("1991");
-        $(".react-datepicker__day--005").click();
+        $(".react-datepicker__month-select").selectOption("January");
+        $(".react-datepicker__year-select").selectOption("1991");
+        $(".react-datepicker__day--026:not(.react-datepicker__day--outside-month)").click();
         $("#subjectsInput").setValue("Computer Science").pressEnter();
         $(byText("Music")).click();
         $("#uploadPicture").uploadFromClasspath("avatar.jpg");
         $("#currentAddress").setValue("Milan");
-        $(byText("Select State")).scrollTo().click();
+        $("#stateCity-wrapper").$(byText("Select State")).scrollTo().click();
         $(byText("Haryana")).click();
-        $(byText("Select City")).click();
+        $("#stateCity-wrapper").$(byText("Select City")).click();
         $(byText("Karnal")).click();
-
-        executeJavaScript("$('footer').remove()");
-        executeJavaScript("$('#close-fixedban').remove()");
 
         $("#submit").click();
 
+        $(".modal-content").should(appear);
+        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
         $(".modal-content").shouldHave(text("Petr"),
                 text("Smirnov"),
                 text("Smirnov@mail.ru"),
                 text("Male"),
                 text("1112223330"),
-                text("05 January,1991"),
+                text("26 January,1991"),
                 text("Computer Science"),
                 text("Music"),
                 text("avatar.jpg"),
