@@ -99,11 +99,6 @@ public class RegistrationFormPage {
         return this;
     }
 
-    public RegistrationFormPage checkButton(String value) {
-        $(".modal-footer").shouldHave(text(value));
-        return this;
-    }
-
     private RegistrationFormPage setLocation(String locationName, String value) {
         $("#" + locationName).click();
         $(byText(value)).click();
