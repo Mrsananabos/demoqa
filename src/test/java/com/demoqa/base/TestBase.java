@@ -1,8 +1,12 @@
 package com.demoqa.base;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import com.demoqa.helpers.AllureAttach;
 import com.demoqa.testData.TestData;
 import com.google.common.collect.ImmutableMap;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -30,6 +34,8 @@ public class TestBase {
 
     @BeforeAll
     static void configure() {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
         Configuration.baseUrl = "https://demoqa.com";
     }
 
@@ -52,6 +58,13 @@ public class TestBase {
         city = testData.getCity();
         stateAndCity = testData.getStateAndCity();
         currentAddress = testData.getCurrentAddress();
+    }
+
+    @AfterEach
+    void addAttachments() {
+        AllureAttach.screenshotAs("Last screenshot");
+        AllureAttach.pageSource();
+        AllureAttach.browserConsoleLogs();
     }
 
     protected Map<String, String> getExpectedValue() {
