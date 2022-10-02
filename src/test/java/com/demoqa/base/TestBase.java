@@ -36,11 +36,9 @@ public class TestBase {
     @BeforeAll
     static void configure() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-
         DesiredCapabilities capabilities = new DesiredCapabilities();
+
         Configuration.browserCapabilities = capabilities;
-        capabilities.setCapability("enableVNC", true);
-        capabilities.setCapability("enableVideo", true);
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browser = System.getProperty("browser_name", "chrome");
         Configuration.browserVersion = System.getProperty("browser_version", "100.0");
@@ -48,6 +46,8 @@ public class TestBase {
 
         if (System.getProperty("remote") != null) {
             Configuration.remote = System.getProperty("remote");
+            capabilities.setCapability("enableVNC", true);
+            capabilities.setCapability("enableVideo", true);
         }
     }
 
@@ -77,7 +77,9 @@ public class TestBase {
         AllureAttach.screenshotAs("Last screenshot");
         AllureAttach.pageSource();
         AllureAttach.browserConsoleLogs();
-        AllureAttach.addVideo();
+        if (System.getProperty("remote") != null) {
+            AllureAttach.addVideo();
+        }
     }
 
     protected Map<String, String> getExpectedValue() {
