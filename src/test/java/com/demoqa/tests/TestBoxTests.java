@@ -2,7 +2,6 @@ package com.demoqa.tests;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -15,7 +14,7 @@ public class TestBoxTests {
     static void configure() {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = System.getProperty("browser_size", "1920x1180");
-            Configuration.remote = System.getProperty("https://user1:1234@selenoid.autotests.cloud/wd/hub");
+        Configuration.remote = System.getProperty("https://user1:1234@selenoid.autotests.cloud/wd/hub");
 
     }
 

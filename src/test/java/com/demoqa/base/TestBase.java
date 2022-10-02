@@ -49,8 +49,6 @@ public class TestBase {
         if (System.getProperty("remote") != null) {
             Configuration.remote = System.getProperty("remote");
         }
-        System.out.println(System.getProperty("browser_name", "chrome"));
-        System.out.println(System.getProperty("remote"));
     }
 
     @BeforeEach
