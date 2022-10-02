@@ -39,14 +39,18 @@ public class TestBase {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         Configuration.browserCapabilities = capabilities;
-        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", true);
-
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browser = System.getProperty("browser_name", "chrome");
         Configuration.browserVersion = System.getProperty("browser_version", "100.0");
         Configuration.browserSize = System.getProperty("browser_size", "1920x1180");
+
+        if (System.getProperty("remote") != null) {
+            Configuration.remote = System.getProperty("remote");
+        }
+        System.out.println(System.getProperty("browser_name", "chrome"));
+        System.out.println(System.getProperty("remote"));
     }
 
     @BeforeEach

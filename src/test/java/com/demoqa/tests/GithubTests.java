@@ -3,6 +3,7 @@ package com.demoqa.tests;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -18,6 +19,7 @@ public class GithubTests {
         Selenide.clearBrowserCookies();
     }
 
+    @Disabled
     @Test
     void fillFormTest() {
         open("/selenide/selenide");
